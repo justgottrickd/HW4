@@ -48,20 +48,19 @@ end
 
 # declarative step for populating the DB with movies.
 
+#part 1
+
 Given /the following movies have been added to RottenPotatoes:/ do |movies_table|
   movies_table.hashes.each do |movie|
 	Movie.create!(movie)
     # Each returned movie will be a hash representing one row of the movies_table
     # The keys will be the table headers and the values will be the row contents.
-    # You should arrange to add that movie to the database here.
-    # You can add the entries directly to the databasse with ActiveRecord methodsQ
   end
 end
 
+#part2
+
 When /^I have opted to see movies rated: "(.*?)"$/ do |arg1|
-  # HINT: use String#split to split up the rating_list, then
-  # iterate over the ratings and check/uncheck the ratings
-  # using the appropriate Capybara command(s)
   arg1.split(', ').each {|x|  %{check'#{x}'}}
 end
 
@@ -73,6 +72,8 @@ Then /^I should see all of the movies$/ do
   rows = page.all('#movies tr').size - 1
 	rows.should == Movie.count()
 end
+
+#part 3
 
 When /^(?:|I )follow "([^"]*)"$/ do |location|
   click_link(location)
